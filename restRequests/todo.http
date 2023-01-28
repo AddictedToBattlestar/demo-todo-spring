@@ -1,0 +1,35 @@
+### GET request with a header
+GET http://localhost:8080/api/todo
+Accept: application/json
+
+### GET request by id
+GET http://localhost:8080/api/todo/1
+Accept: application/json
+
+
+### GET request with parameter
+GET http://localhost:8080/api/todo?isComplete=false
+Accept: application/json
+
+### Send POST request with json body
+POST http://localhost:8080/api/todo
+Content-Type: application/json
+
+{
+  "id": null,
+  "description": "Get bread"
+}
+
+### Send PUT request with json body
+PUT http://localhost:8080/api/todo/1
+Content-Type: application/json
+
+{
+  "id": 2,
+  "complete": true,
+  "description": "Get bread",
+  "dueDate": null
+}
+### DELETE request by id
+DELETE http://localhost:8080/api/todo/2
+Accept: application/json
