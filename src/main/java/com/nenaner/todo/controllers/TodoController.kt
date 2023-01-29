@@ -3,14 +3,18 @@ package com.nenaner.todo.controllers
 import com.nenaner.todo.entities.TodoEntity
 import com.nenaner.todo.repositories.TodoRepository
 import jakarta.validation.Valid
+import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
 @RequestMapping("/api/todo")
 class TodoController(private val todoRepository: TodoRepository) {
+    private final val logger = LoggerFactory.getLogger(this.javaClass)
+
     @GetMapping
     fun findAll(@RequestParam(name = "isComplete", required = false) isComplete: Boolean?): Iterable<TodoEntity> {
+        logger.info("findAll called")
         return if (isComplete == null) {
             todoRepository.findAll()
         } else {
