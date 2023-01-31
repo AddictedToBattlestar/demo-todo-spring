@@ -25,7 +25,7 @@ PUT http://localhost:8080/api/todo/1
 Content-Type: application/json
 
 {
-  "id": 2,
+  "id": 1,
   "complete": true,
   "description": "Get bread",
   "dueDate": null
