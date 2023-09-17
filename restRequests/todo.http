@@ -31,5 +31,5 @@ Content-Type: application/json
   "dueDate": null
 }
 ### DELETE request by id
-DELETE http://localhost:8080/api/todo/2
+DELETE http://localhost:8080/api/todo/1
 Accept: application/json
