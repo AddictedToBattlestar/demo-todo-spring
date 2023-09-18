@@ -13,6 +13,8 @@ class TodoEntity(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long,
     var complete: Boolean = false,
+    @NotBlank(message = "The title must be provided and cannot be blank")
+    var title: String,
     @NotBlank(message = "The description must be provided and cannot be blank")
     var description: String,
     var dueDate: Instant?

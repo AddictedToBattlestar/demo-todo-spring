@@ -13,6 +13,7 @@ create table todo_aud
     rev         int          not null,
     revtype     tinyint      null,
     complete    bit          null,
+    title       varchar(50)  null,
     description varchar(255) null,
     due_date    datetime(6)  null,
     primary key (rev, id),
