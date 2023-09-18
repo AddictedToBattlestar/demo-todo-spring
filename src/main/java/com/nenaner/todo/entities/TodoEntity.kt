@@ -1,5 +1,6 @@
 package com.nenaner.todo.entities
 
+import com.nenaner.todo.models.Todo
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 import org.hibernate.envers.Audited
@@ -13,9 +14,19 @@ class TodoEntity(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long,
     var complete: Boolean = false,
-    @NotBlank(message = "The title must be provided and cannot be blank")
     var title: String,
-    @NotBlank(message = "The description must be provided and cannot be blank")
     var description: String,
     var dueDate: Instant?
-)
+) {
+    companion object {
+        fun fromModel(sourceTodo: Todo): TodoEntity {
+            return TodoEntity(
+                sourceTodo.id,
+                sourceTodo.complete,
+                sourceTodo.title,
+                sourceTodo.description,
+                sourceTodo.dueDate
+            )
+        }
+    }
+}
