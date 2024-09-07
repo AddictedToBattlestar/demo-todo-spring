@@ -1,52 +1,41 @@
 package com.nenaner.todo.controllers
 
-import com.nenaner.todo.entities.TodoEntity
 import com.nenaner.todo.models.Todo
 import com.nenaner.todo.repositories.TodoRepository
+import com.nenaner.todo.services.TodoCreationService
 import com.nenaner.todo.services.TodoUpdateService
 import jakarta.validation.Valid
-import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
 @RequestMapping("/api/todo")
 class TodoController(
-    private val todoRepository: TodoRepository,
-    private val todoUpdateService: TodoUpdateService
+    private val repository: TodoRepository,
+    private val creationService: TodoCreationService,
+    private val updateService: TodoUpdateService
 ) {
-    private final val logger = LoggerFactory.getLogger(this.javaClass)
 
     @GetMapping
     fun findAll(@RequestParam(name = "isComplete", required = false) isComplete: Boolean?): Iterable<Todo> {
-        logger.info("findAll called")
         return if (isComplete == null) {
-            val todos = todoRepository.findAll()
+            val todos = repository.findAll()
             Todo.fromEntities(todos)
         } else {
-            val todos = todoRepository.findAllByComplete(isComplete)
+            val todos = repository.findAllByComplete(isComplete)
             Todo.fromEntities(todos)
         }
     }
 
     @GetMapping("/{id}")
-    fun findById(@PathVariable id: Long): Optional<Todo> = Todo.fromOptionalEntity(todoRepository.findById(id))
+    fun findById(@PathVariable id: Long): Optional<Todo> = Todo.fromOptionalEntity(repository.findById(id))
 
     @PostMapping
-    fun create(@Valid @RequestBody todoBeingCreated: Todo): Todo {
-        if (todoRepository.existsById(todoBeingCreated.id)) {
-            return update(todoBeingCreated)
-        }
-        val entityToCreate = TodoEntity.fromModel(todoBeingCreated)
-        val createdTodo = todoRepository.save(entityToCreate)
-        return Todo.fromEntity(createdTodo)
-    }
+    fun create(@Valid @RequestBody todoBeingCreated: Todo): Todo = creationService.create(todoBeingCreated)
 
     @PutMapping("{id}")
-    fun update(@Valid @RequestBody todoBeingUpdated: Todo): Todo  {
-        return todoUpdateService.update(todoBeingUpdated)
-    }
+    fun update(@Valid @RequestBody todoBeingUpdated: Todo): Todo = updateService.update(todoBeingUpdated)
 
     @DeleteMapping("{id}")
-    fun update(@PathVariable id: Long) = todoRepository.deleteById(id)
+    fun update(@PathVariable id: Long) = repository.deleteById(id)
 }

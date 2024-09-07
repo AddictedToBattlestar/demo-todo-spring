@@ -6,7 +6,6 @@ Accept: application/json
 GET http://localhost:8080/api/todo/1
 Accept: application/json
 
-
 ### GET request with parameter
 GET http://localhost:8080/api/todo?isComplete=false
 Accept: application/json
@@ -17,7 +16,8 @@ Content-Type: application/json
 
 {
   "id": null,
-  "description": "Get bread"
+  "title": "White bread",
+  "description": "Get white bread"
 }
 
 ### Send PUT request with json body
@@ -27,9 +27,11 @@ Content-Type: application/json
 {
   "id": 1,
   "complete": true,
-  "description": "Get bread",
+  "title": "White bread",
+  "description": "Get white bread",
   "dueDate": null
 }
+
 ### DELETE request by id
 DELETE http://localhost:8080/api/todo/1
 Accept: application/json
