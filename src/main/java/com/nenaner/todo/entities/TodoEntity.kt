@@ -2,12 +2,11 @@ package com.nenaner.todo.entities
 
 import com.nenaner.todo.models.Todo
 import jakarta.persistence.*
-import jakarta.validation.constraints.NotBlank
 import org.hibernate.envers.Audited
 import java.time.Instant
 
-@Entity
 @Audited
+@Entity
 @Table(name = "todo")
 class TodoEntity(
     @Id
